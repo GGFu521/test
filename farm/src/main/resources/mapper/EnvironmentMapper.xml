@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.modules.mapper.EnvironmentMapper">
+
+<select id="selectListInfo" resultType="com.xxx.modules.entity.Environment">
+select `e`.*,p.place_name,p.location from `environment` e   left join `place` p on e.place_id = p.id
+   where 1=1
+    <if test="placeId !=null">
+        and e.place_id = #{placeId}
+    </if>
+    <if test="status !=null">
+        and e.status = #{status}
+    </if>
+    <if test="placeName !=null">
+        and p.place_name like concat('%',#{placeName},'%')
+    </if>
+        <if test="location !=null">
+        and p.location like concat('%',#{location},'%')
+    </if>
+    order by e.create_time desc
+        </select>
+
+
+</mapper>
